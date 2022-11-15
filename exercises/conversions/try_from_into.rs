@@ -23,7 +23,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
 
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
@@ -38,6 +37,28 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let mut red:u8 = 0;
+        let mut green:u8 = 0;
+        let mut blue:u8 = 0;
+        match tuple.0.try_into() {
+            Ok(r) => {
+                red = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        match tuple.1.try_into() {
+            Ok(r) => {
+                green = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        match tuple.2.try_into() {
+            Ok(r) => {
+                blue = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        Ok(Color{ red, green, blue })
     }
 }
 
@@ -45,6 +66,28 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let mut red:u8 = 0;
+        let mut green:u8 = 0;
+        let mut blue:u8 = 0;
+        match arr[0].try_into() {
+            Ok(r) => {
+                red = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        match arr[1].try_into() {
+            Ok(r) => {
+                green = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        match arr[2].try_into() {
+            Ok(r) => {
+                blue = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        Ok(Color{ red, green, blue })
     }
 }
 
@@ -52,6 +95,31 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(self::IntoColorError::BadLen)
+        }
+        let mut red:u8 = 0;
+        let mut green:u8 = 0;
+        let mut blue:u8 = 0;
+        match slice[0].try_into() {
+            Ok(r) => {
+                red = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        match slice[1].try_into() {
+            Ok(r) => {
+                green = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        match slice[2].try_into() {
+            Ok(r) => {
+                blue = r;
+            },
+            Err(e) => {return Err(self::IntoColorError::IntConversion);}
+        }
+        Ok(Color{ red, green, blue })
     }
 }
 
